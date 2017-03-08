@@ -22,7 +22,6 @@ class HNFetch(object):
         
         
     def get_item(self, item):
-        # print('fetching item {}'.format(item), file=sys.stderr)
         ret = requests.get('https://hacker-news.firebaseio.com/v0/item/{}.json?print=pretty'.format(item)).json()
         self.update_progress()
         return ret
@@ -56,9 +55,9 @@ class HNFetch(object):
         data.sort(key=lambda x: -x[1])
         for item in data:
             try:
-                print('{} - {}\n{}\n'.format(item[1], item[2], item[3]))
+                print('{} - [{}] {}\n{}\n'.format(item[1], item[0], item[2], item[3]))
             except UnicodeEncodeError:
-                print('{}\n{}\n'.format(item[1], item[3]))
+                print('{} - [{}]\n{}\n'.format(item[1], item[0], item[3]))
     
     
 
