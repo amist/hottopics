@@ -35,7 +35,10 @@ def main():
     data = [[x['id'], x['descendants'], x['title'], x.get('url', '')] for x in stats.values()]
     data.sort(key=lambda x: -x[1])
     for item in data:
-        print('{} - {}\n{}\n'.format(item[1], item[2], item[3]))
+        try:
+            print('{} - {}\n{}\n'.format(item[1], item[2], item[3]))
+        except UnicodeEncodeError:
+            print('{}\n{}\n'.format(item[1], item[3]))
     
     
 
