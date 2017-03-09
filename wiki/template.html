@@ -1,0 +1,41 @@
+<html>
+    <head>
+        <style>
+            table {
+                    table-layout: fixed;
+                }
+
+                th, td {
+                    width: 100px;
+                }
+        </style>
+    </head>
+    <body>
+        <table>
+            <tr>
+                <th>
+                    Date
+                </th>
+                {% for i in range(num) %}
+                    <th>
+                        {{ i+1 }}
+                    </th>
+                {% endfor %}
+            </tr>
+            {% for stat in stats %}
+            <tr>
+                <td>
+                    {{ stat['items'][0]['year'] }}/{{ stat['items'][0]['month'] }}/{{ stat['items'][0]['day'] }}
+                </td>
+                {% for i in range(num) %}
+                    {% set views = stat['items'][0]['articles'][i]['views'] %}
+                    <!-- <td style="background: hsl(288, {{(100*views)//100000}}%, {{100-(50*views)//100000}}%)"> -->
+                    <td style="background: hsl(288, {{(views/10)**0.5}}%, {{100-(0.7*(views/10)**0.5)}}%)">
+                        {{ views }} <br/> {{ stat['items'][0]['articles'][i]['article'].replace('_', ' ') }}
+                    </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+    </body>
+</html>

@@ -9,8 +9,7 @@ class RedditFetch(object):
         
         
     def get_item(self, item):
-        ret = requests.get('https://www.reddit.com/r/{}/top/.json?count=20'.format(item), headers = {'User-agent': 'your bot 0.1'}).json()
-        return ret
+        return requests.get('https://www.reddit.com/r/{}/top/.json?count=20'.format(item), headers = {'User-agent': 'your bot 0.1'}).json()
         
         
     def get_items(self):
