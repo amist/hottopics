@@ -9,7 +9,7 @@ class WikiViews(object):
 
 
     def get_day_stats(self, day):
-        cmd = 'https://wikimedia.org/api/rest_v1/metrics/pageviews/top/en.wikipedia/mobile-app/{}/{:02d}/{:02d}'.format(day.year, day.month, day.day)
+        cmd = 'https://wikimedia.org/api/rest_v1/metrics/pageviews/top/en.wikipedia/mobile-web/{}/{:02d}/{:02d}'.format(day.year, day.month, day.day)
         ret = requests.get(cmd).json()
         return ret
 
@@ -26,15 +26,15 @@ class WikiViews(object):
         templateEnv = jinja2.Environment(loader=templateLoader)
         template = templateEnv.get_template("template.html")
         stats = self.get_all_stats(date_start, date_end)
-        template_vars = {'stats': stats, 'num': 10}
+        template_vars = {'stats': stats, 'num': 20}
         html = template.render(template_vars)
-        with open('report.html', 'w') as f:
+        with open('report.html', 'w', encoding='utf8') as f:
             f.write(html)
 
         
 if __name__ == '__main__':
     wv = WikiViews()
-    date_start = date(2016, 11, 1)
-    date_end = date(2016, 12, 1)
+    date_start = date(2016, 1, 1)
+    date_end = date(2017, 3, 8)
     wv.get_html_stats(date_start, date_end)
 
