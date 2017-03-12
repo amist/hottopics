@@ -3,10 +3,13 @@
         <style>
             table {
                     table-layout: fixed;
+                    width: 100%;
                 }
 
                 th, td {
                     width: 100px;
+                    word-wrap: break-word;
+                    color: darkblue;
                 }
         </style>
     </head>
@@ -31,7 +34,10 @@
                     {% set views = stat['items'][0]['articles'][i]['views'] %}
                     <!-- <td style="background: hsl(288, {{(100*views)//100000}}%, {{100-(50*views)//100000}}%)"> -->
                     <td style="background: hsl(288, {{(views/500)**0.5}}%, {{100-(0.7*(views/500)**0.5)}}%)">
-                        {{ views }} <br/> {{ stat['items'][0]['articles'][i]['article'].replace('_', ' ') }}
+                        {{ views }} <br/>
+                        <a href="{{ 'https://en.wikipedia.org/wiki/%s' % stat['items'][0]['articles'][i]['article'] }}">
+                            {{ stat['items'][0]['articles'][i]['article'].replace('_', ' ') }}
+                        </a>
                     </td>
                 {% endfor %}
             </tr>

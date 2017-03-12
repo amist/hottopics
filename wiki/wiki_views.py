@@ -34,7 +34,7 @@ class WikiViews(object):
         
 if __name__ == '__main__':
     wv = WikiViews()
-    date_start = date(2016, 1, 1)
-    date_end = date(2017, 3, 8)
+    date_start = date(2015, 7, 1)
+    date_end = date(2017, 3, 11)
     wv.get_html_stats(date_start, date_end)
 
