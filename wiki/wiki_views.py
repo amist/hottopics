@@ -5,11 +5,14 @@ from multiprocessing.pool import ThreadPool
 
 class WikiViews(object):
     def __init__(self):
-        pass
+        self.lang = 'en'
+        #self.lang = 'he'
+        self.access = 'mobile-web'
+        #self.access = 'all-access'
 
 
     def get_day_stats(self, day):
-        cmd = 'https://wikimedia.org/api/rest_v1/metrics/pageviews/top/en.wikipedia/mobile-web/{}/{:02d}/{:02d}'.format(day.year, day.month, day.day)
+        cmd = 'https://wikimedia.org/api/rest_v1/metrics/pageviews/top/{}.wikipedia/{}/{}/{:02d}/{:02d}'.format(self.lang, self.access, day.year, day.month, day.day)
         ret = requests.get(cmd).json()
         return ret
 
@@ -26,7 +29,8 @@ class WikiViews(object):
         templateEnv = jinja2.Environment(loader=templateLoader)
         template = templateEnv.get_template("template.html")
         stats = self.get_all_stats(date_start, date_end)
-        template_vars = {'stats': stats, 'num': 20}
+        max_val = max([x['views'] for stat in stats for x in stat['items'][0]['articles']])
+        template_vars = {'stats': stats, 'num': 20, 'lang': self.lang, 'max_val': max_val}
         html = template.render(template_vars)
         with open('report.html', 'w', encoding='utf8') as f:
             f.write(html)
@@ -35,6 +39,7 @@ class WikiViews(object):
 if __name__ == '__main__':
     wv = WikiViews()
     date_start = date(2015, 7, 1)
+    #date_start = date(2017, 3, 10)
     date_end = date(2017, 3, 11)
     wv.get_html_stats(date_start, date_end)
 

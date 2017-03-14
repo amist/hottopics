@@ -33,9 +33,10 @@
                 {% for i in range(num) %}
                     {% set views = stat['items'][0]['articles'][i]['views'] %}
                     <!-- <td style="background: hsl(288, {{(100*views)//100000}}%, {{100-(50*views)//100000}}%)"> -->
-                    <td style="background: hsl(288, {{(views/500)**0.5}}%, {{100-(0.7*(views/500)**0.5)}}%)">
+                    <!-- <td style="background: hsl(288, {{(views/500)**0.5}}%, {{100-(0.7*(views/500)**0.5)}}%)"> -->
+                    <td style="background: hsl(288, {{100*(views/max_val)**0.5}}%, {{100-(70*(views/max_val)**0.5)}}%)">
                         {{ views }} <br/>
-                        <a href="{{ 'https://en.wikipedia.org/wiki/%s' % stat['items'][0]['articles'][i]['article'] }}">
+                        <a href="{{ 'https://%s.wikipedia.org/wiki/%s' % (lang, stat['items'][0]['articles'][i]['article']) }}">
                             {{ stat['items'][0]['articles'][i]['article'].replace('_', ' ') }}
                         </a>
                     </td>
