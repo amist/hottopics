@@ -38,7 +38,7 @@ class HNFetch(object):
         
         stats = {}
         for item in items:
-            if item['type'] == 'job':
+            if 'type' not in item or item['type'] == 'job':
                 continue
             if 'id' not in item or 'descendants' not in item or 'title' not in item:
                 print('KeyError', file=sys.stderr)
@@ -51,7 +51,7 @@ class HNFetch(object):
     def fetch(self):
         stats = self.get_stats()
         
-        data = [[x['id'], x['descendants'], x['title'], x.get('url', '')] for x in stats.values()]
+        data = [[x['id'], x['descendants'], x['title'], x.get('url', 'https://news.ycombinator.com/item?id={}'.format(x['id']))] for x in stats.values()]
         data.sort(key=lambda x: -x[1])
         for item in data:
             try:
